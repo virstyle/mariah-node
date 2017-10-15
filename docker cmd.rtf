@@ -1,0 +1,79 @@
+{\rtf1\ansi\ansicpg936\cocoartf1561
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset134 PingFangSC-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+apt-get update\
+apt-get install vim\
+\
+\
+\
+1.
+\f1 \'cd\'a3\'d6\'b9\'cb\'f9\'d3\'d0\'b5\'c4
+\f0 container
+\f1 \'a3\'ac\'d5\'e2\'d1\'f9\'b2\'c5\'c4\'dc\'b9\'bb\'c9\'be\'b3\'fd\'c6\'e4\'d6\'d0\'b5\'c4
+\f0 images
+\f1 \'a3\'ba
+\f0 \
+\
+docker stop $(docker ps -a -q)\
+\
+
+\f1 \'c8\'e7\'b9\'fb\'cf\'eb\'d2\'aa\'c9\'be\'b3\'fd\'cb\'f9\'d3\'d0
+\f0 container
+\f1 \'b5\'c4\'bb\'b0\'d4\'d9\'bc\'d3\'d2\'bb\'b8\'f6\'d6\'b8\'c1\'ee\'a3\'ba
+\f0 \
+\
+docker rm $(docker ps -a -q)\
+\
+2.
+\f1 \'b2\'e9\'bf\'b4\'b5\'b1\'c7\'b0\'d3\'d0\'d0\'a9\'ca\'b2\'c3\'b4
+\f0 images\
+\
+docker images\
+\
+3.
+\f1 \'c9\'be\'b3\'fd
+\f0 images
+\f1 \'a3\'ac\'cd\'a8\'b9\'fd
+\f0 image
+\f1 \'b5\'c4
+\f0 id
+\f1 \'c0\'b4\'d6\'b8\'b6\'a8\'c9\'be\'b3\'fd\'cb\'ad
+\f0 \
+\
+docker rmi <image id>\
+\
+
+\f1 \'cf\'eb\'d2\'aa\'c9\'be\'b3\'fd
+\f0 untagged images
+\f1 \'a3\'ac\'d2\'b2\'be\'cd\'ca\'c7\'c4\'c7\'d0\'a9
+\f0 id
+\f1 \'ce\'aa
+\f0 <None>
+\f1 \'b5\'c4
+\f0 image
+\f1 \'b5\'c4\'bb\'b0\'bf\'c9\'d2\'d4\'d3\'c3
+\f0 \
+\
+docker rmi $(docker images | grep "^<none>" | awk "\{print $3\}")\
+docker rmi $(docker images | grep "^<none>" | awk "\{print $3\}")\
+
+\f1 \'d2\'aa\'c9\'be\'b3\'fd\'c8\'ab\'b2\'bf
+\f0 image
+\f1 \'b5\'c4\'bb\'b0
+\f0 \
+\
+docker rmi $(docker images -q)\
+\
+\
+\
+docker network create --subnet=172.18.0.0/16 shadownet\
+docker build -t mariadb-node:1.07 /Users/WANGZHIHUI/Documents/docker-mariadb-cluster-node-master\
+docker run --detach=true  --name node1 --net shadownet --ip 172.18.0.11 mariadb-node:1.07  --wsrep-cluster-name=dbcluster --wsrep-cluster-address=gcomm://\
+\
+docker run --detach=true  --name node2 --net shadownet --ip 172.18.0.12 -p 33062:3306 --link node1:node1 mariadb-node:1.07 --wsrep-cluster-name=dbcluster  --wsrep-cluster-address=gcomm://\
+docker run --detach=true  --name node3   --net shadownet --ip 172.18.0.13 -p 33063:3306 --link node1:node1  mariadb-node:1.07  --wsrep-cluster-name=dbcluster --wsrep-cluster-address=gcomm://}
